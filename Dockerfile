@@ -3,13 +3,16 @@ FROM alpine:edge AS source
 RUN apk add mesa-va-gallium --no-cache --update-cache
 
 RUN mkdir -p "/vaapi-amdgpu/lib/dri" \
- && cp /usr/lib/dri/radeonsi_drv_video.so "/vaapi-amdgpu/lib/dri" \
+ && cp -a /usr/lib/dri/*.so "/vaapi-amdgpu/lib/dri" \
  && cd /lib \
- && cp -a ld-musl-x86_64.so.1* \
+ && cp -a \
+    ld-musl-x86_64.so.1* \
+    libc.musl-x86_64.so.1* \
     libz.so.1* \
     "/vaapi-amdgpu/lib" \
  && cd /usr/lib \
- && cp -a libLLVM-15.0.6.so* \
+ && cp -a \
+    libLLVM-15.0.6.so* \
     libLLVM-15.so* \
     libX11-xcb.so.1* \
     libXau.so.6* \
@@ -32,14 +35,15 @@ RUN mkdir -p "/vaapi-amdgpu/lib/dri" \
     libxcb.so.1* \
     libxml2.so.2* \
     libxshmfence.so.1* \
+    libbsd.so.0* \
+    libmd.so.0* \
+    libzstd.so.1* \
     "/vaapi-amdgpu/lib"
-
 
 FROM scratch
 
-ENV LIBVA_DRIVERS_PATH="/vaapi-amdgpu/lib/dri" \
-    LD_LIBRARY_PATH=/vaapi-amdgpu/lib:/lib/plexmediaserver/lib:/lib/x86_64-linux-gnu/:/lib
+#ENV LIBVA_DRIVERS_PATH="/vaapi-amdgpu/lib/dri" \
+#    LD_LIBRARY_PATH=/vaapi-amdgpu/lib:/lib/plexmediaserver/lib:/lib/x86_64-linux-gnu/:/lib
 
 COPY --from=source "/vaapi-amdgpu/" "/vaapi-amdgpu/"
-
 
