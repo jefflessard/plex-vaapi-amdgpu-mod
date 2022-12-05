@@ -4,8 +4,7 @@ Librairies are taken from package [mesa-va-gallium](https://pkgs.alpinelinux.org
 
 Librairies are voluntarily located outside of plexmediaserver path, in `/vaapi-amdgpu/lib`. This allows to use `VERSION=latest` so Plex can automatically updates its version, without replacing the provided librairies.
 
-In addition of setting the `DOCKER_MODS` environment variable to `jefflessard/plex-vaapi-amdgpu-mod` you will also need to define `LIBVA_DRIVERS_PATH` and `LD_LIBRARY_PATH` environment variables such as in the example below.
-
+In addition of setting the `DOCKER_MODS` environment variable to `jefflessard/plex-vaapi-amdgpu-mod` you will also need to define `LIBVA_DRIVERS_PATH` environment variable such as in the example below.
 
 
 
@@ -16,15 +15,19 @@ docker run -d \
        --device /dev/dri/ \
        -e DOCKER_MODS=jefflessard/plex-vaapi-amdgpu-mod \
        -e LIBVA_DRIVERS_PATH="/vaapi-amdgpu/lib/dri" \
-       -e LD_LIBRARY_PATH=/vaapi-amdgpu/lib:/lib/plexmediaserver/lib:/lib/x86_64-linux-gnu/:/lib \
        -e VERSION=latest \
        ...
        --name plex \
        linuxserver/plex
 ```
 
+Defining LD_LIBRARY_PATH is not required anymore. It is now exported in s6 svc-plex run command.
+
+
+
 To quickly check if hardware acceleration is working, run the following and check for vaapi errors.
 ```
-docker exec -it plex \
+docker exec -it -e LD_LIBRARY_PATH=/vaapi-amdgpu/lib plex \
 /lib/plexmediaserver/Plex\ Transcoder -hide_banner -loglevel debug -vaapi_device /dev/dri/renderD128
 ```
+

@@ -2,14 +2,14 @@ FROM alpine:edge AS source
 
 RUN apk add mesa-va-gallium --no-cache --update-cache
 
-RUN mkdir -p "/vaapi-amdgpu/lib/dri" \
- && cp -a /usr/lib/dri/*.so "/vaapi-amdgpu/lib/dri" \
+RUN mkdir -p "/source/vaapi-amdgpu/lib/dri" \
+ && cp -a /usr/lib/dri/*.so /source/vaapi-amdgpu/lib/dri \
  && cd /lib \
  && cp -a \
     ld-musl-x86_64.so.1* \
     libc.musl-x86_64.so.1* \
     libz.so.1* \
-    "/vaapi-amdgpu/lib" \
+    /source/vaapi-amdgpu/lib \
  && cd /usr/lib \
  && cp -a \
     libLLVM-15.0.6.so* \
@@ -38,12 +38,16 @@ RUN mkdir -p "/vaapi-amdgpu/lib/dri" \
     libbsd.so.0* \
     libmd.so.0* \
     libzstd.so.1* \
-    "/vaapi-amdgpu/lib"
+    libffi.so.8* \
+    liblzma.so.5* \
+    /source/vaapi-amdgpu/lib \
+ && mkdir -p /source/etc/s6-overlay/s6-rc.d/svc-plex/ 
+
+COPY run /source/etc/s6-overlay/s6-rc.d/svc-plex/ 
 
 FROM scratch
 
 #ENV LIBVA_DRIVERS_PATH="/vaapi-amdgpu/lib/dri" \
-#    LD_LIBRARY_PATH=/vaapi-amdgpu/lib:/lib/plexmediaserver/lib:/lib/x86_64-linux-gnu/:/lib
 
-COPY --from=source "/vaapi-amdgpu/" "/vaapi-amdgpu/"
+COPY --from=source "/source/" "/"
 
