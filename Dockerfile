@@ -41,6 +41,8 @@ RUN mkdir -p "/source/vaapi-amdgpu/lib/dri" \
     libffi.so.8* \
     liblzma.so.5* \
     /source/vaapi-amdgpu/lib \
+ && mkdir -p /source/usr/share/libdrm \
+ && cp -a /usr/share/libdrm/amdgpu.ids /source/usr/share/libdrm/ \
  && mkdir -p /source/etc/s6-overlay/s6-rc.d/svc-plex/ 
 
 COPY run /source/etc/s6-overlay/s6-rc.d/svc-plex/ 

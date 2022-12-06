@@ -24,6 +24,10 @@ docker run -d \
 Defining LD_LIBRARY_PATH is not required anymore. It is now exported in s6 svc-plex run command.
 
 
+**You now need to remove `-e LD_LIBRARY_PATH=...` from your docker run command.**
+
+
+
 
 To quickly check if hardware acceleration is working, run the following and check for vaapi errors.
 ```
