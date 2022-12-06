@@ -17,6 +17,7 @@ RUN mkdir -p "/source/vaapi-amdgpu/lib/dri" \
     libX11-xcb.so.1* \
     libXau.so.6* \
     libXdmcp.so.6* \
+    libdrm.so.2* \
     libdrm_amdgpu.so.1* \
     libdrm_nouveau.so.2* \
     libdrm_radeon.so.1* \
