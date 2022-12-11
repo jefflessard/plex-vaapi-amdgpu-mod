@@ -13,7 +13,6 @@ Usage example :
 docker run -d \
        --device /dev/dri/ \
        -e DOCKER_MODS=jefflessard/plex-vaapi-amdgpu-mod \
-       -e LIBVA_DRIVERS_PATH="/vaapi-amdgpu/lib/dri" \
        -e VERSION=latest \
        ...
        --name plex \
