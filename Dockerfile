@@ -12,8 +12,7 @@ RUN mkdir -p "/source/vaapi-amdgpu/lib/dri" \
     /source/vaapi-amdgpu/lib \
  && cd /usr/lib \
  && cp -a \
-    libLLVM-15.0.6.so* \
-    libLLVM-15.so* \
+    libLLVM-15*.so* \
     libX11-xcb.so.1* \
     libXau.so.6* \
     libXdmcp.so.6* \
