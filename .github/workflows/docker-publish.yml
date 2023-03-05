@@ -33,4 +33,4 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           push: true
-          tags: ${{ github.repository }}:dev
+          tags: ghcr.io/${{ github.repository }}:dev
