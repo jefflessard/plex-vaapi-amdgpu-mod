@@ -20,7 +20,7 @@ RUN mkdir -p "/source/vaapi-amdgpu/lib/dri" \
     libdrm_amdgpu.so.1* \
     libdrm_nouveau.so.2* \
     libdrm_radeon.so.1* \
-    libelf-0.188.so* \
+    libelf-*.so* \
     libelf.so.1* \
     libexpat.so.1* \
     libgcc_s.so.1* \
